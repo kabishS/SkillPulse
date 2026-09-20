@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Portal - SkillPulse | SIH26135</title>
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Dedicated Company Stylesheet -->
+    <link rel="stylesheet" href="css/company.css">
+</head>
+<body>
+
+    <!-- ============================================================== -->
+    <!-- VIEW 1: COMPANY LANDING & AUTH SELECTION -->
+    <!-- ============================================================== -->
+    <div id="landingView">
+        <header class="company-header">
+            <div class="container flex-between">
+                <a href="index.html" class="brand-logo">
+                    <div class="brand-icon">
+                        <i class="fa-solid fa-handshake-angle"></i>
+                    </div>
+                    <div class="brand-text">
+                        Skill<span>Pulse</span>
+                        <span class="sih-tag">Company Portal</span>
+                    </div>
+                </a>
+
+                <div class="flex gap-10">
+                    <a href="index.html" class="btn btn-outline btn-sm">
+                        <i class="fa-solid fa-house"></i> Home / User Portal
+                    </a>
+                    <button onclick="showAuthModal('login')" class="btn btn-secondary btn-sm">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </button>
+                    <button onclick="showAuthModal('signup')" class="btn btn-primary btn-sm">
+                        <i class="fa-solid fa-building"></i> Register Company
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container hero-grid">
+                <div>
+                    <div class="hero-badge">
+                        <i class="fa-solid fa-building"></i> Dedicated Employer Portal
+                    </div>
+                    <h1 class="hero-title">
+                        Hire pre-verified talent.<br>
+                        <span class="highlight">Zero black boxes.</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Post job requisitions, discover transparent skill matches, and connect with candidates whose credentials have been directly authenticated by verified training institutes.
+                    </p>
+                    <div class="hero-actions">
+                        <button onclick="showAuthModal('signup')" class="btn btn-primary">
+                            Register Company <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="demoQuickLogin()" class="btn btn-secondary">
+                            Demo Recruiter Login <i class="fa-solid fa-bolt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="visual-card">
+                        <div class="flex-between" style="margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9;">
+                            <div class="flex gap-10" style="align-items: center; font-weight: 600; color: var(--navy-blue);">
+                                <i class="fa-solid fa-users-viewfinder" style="color: var(--primary-blue);"></i> Candidate Match Engine
+                            </div>
+                            <span class="skill-pill verified">Algorithmic Clarity</span>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; gap: 14px;">
+                            <div style="background: var(--bg-light); padding: 14px 18px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                                <div class="flex-between">
+                                    <h4 style="font-size: 0.95rem; font-weight: 600;">Srikar (B.Tech CSE)</h4>
+                                    <span class="match-tag high">98% Match</span>
+                                </div>
+                                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0 8px;">Target: ML Intern &bull; Verified by gpcet</p>
+                                <div class="skills-wrap">
+                                    <span class="skill-pill verified">Python</span>
+                                    <span class="skill-pill verified">Machine Learning</span>
+                                    <span class="skill-pill verified">SQL</span>
+                                </div>
+                            </div>
+
+                            <div style="background: var(--bg-light); padding: 14px 18px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                                <div class="flex-between">
+                                    <h4 style="font-size: 0.95rem; font-weight: 600;">Priya Patel (M.Tech AI)</h4>
+                                    <span class="match-tag high">94% Match</span>
+                                </div>
+                                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 4px 0 8px;">Target: ML Intern &bull; Verified by NextGen AI</p>
+                                <div class="skills-wrap">
+                                    <span class="skill-pill verified">PyTorch</span>
+                                    <span class="skill-pill verified">Python</span>
+                                    <span class="skill-pill verified">NLP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- AUTH MODAL (COMPANY LOGIN & SIGNUP) -->
+    <!-- ============================================================== -->
+    <div id="authModal" class="modal-overlay hidden">
+        <div class="modal-box wide">
+            <div class="modal-header">
+                <h3 class="modal-title" id="authModalTitle">Company Portal Login</h3>
+                <button class="modal-close" onclick="hideAuthModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="companyLoginForm" onsubmit="handleCompanyLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">Official Work Email</label>
+                    <input type="email" id="loginEmail" class="form-input" placeholder="e.g. hr@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-input" placeholder="Enter password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; margin-top: 10px;">
+                    Log In to Recruiter Workspace <i class="fa-solid fa-right-to-bracket"></i>
+                </button>
+
+                <p style="text-align: center; margin-top: 16px; font-size: 0.88rem; color: var(--text-muted);">
+                    New employer? <a href="javascript:void(0)" onclick="toggleAuthMode('signup')" style="color: var(--primary-blue); font-weight: 600;">Register Company Account</a>
+                </p>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="companySignupForm" class="hidden" onsubmit="handleCompanySignupSubmit(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" id="compName" class="form-input" placeholder="e.g. TechCorp Solutions" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Official Work Email</label>
+                        <input type="email" id="compEmail" class="form-input" placeholder="hr@company.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="compPassword" class="form-input" placeholder="Set password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Industry / Sector</label>
+                        <select id="compIndustry" class="form-select" required>
+                            <option value="Information Technology">Information Technology & Software</option>
+                            <option value="Artificial Intelligence">AI & Machine Learning</option>
+                            <option value="Finance & Banking">FinTech & Banking</option>
+                            <option value="Manufacturing">Manufacturing & Engineering</option>
+                            <option value="Healthcare">Healthcare & Biotech</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Company Size</label>
+                        <select id="compSize" class="form-select">
+                            <option value="1-50 Employees">1-50 Employees</option>
+                            <option value="50-200 Employees" selected>50-200 Employees</option>
+                            <option value="200-1000 Employees">200-1000 Employees</option>
+                            <option value="1000+ Employees">1000+ Employees</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Website URL</label>
+                        <input type="url" id="compWebsite" class="form-input" placeholder="https://company.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">HR / Recruiter Name</label>
+                        <input type="text" id="compContactPerson" class="form-input" placeholder="e.g. Pooja Hegde" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Contact Phone</label>
+                        <input type="tel" id="compPhone" class="form-input" placeholder="+91 98765 43210" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label class="form-label">Headquarters / Location</label>
+                        <input type="text" id="compLocation" class="form-input" placeholder="Bengaluru, Karnataka, India" required>
+                    </div>
+
+                    <div class="form-group full">
+                        <label class="form-label">Company Overview</label>
+                        <textarea id="compDesc" class="form-textarea" placeholder="Briefly describe what your organization does..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; margin-top: 10px;">
+                    Complete Employer Registration <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+                <p style="text-align: center; margin-top: 16px; font-size: 0.88rem; color: var(--text-muted);">
+                    Already registered? <a href="javascript:void(0)" onclick="toggleAuthMode('login')" style="color: var(--primary-blue); font-weight: 600;">Log In</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- VIEW 2: AUTHENTICATED COMPANY DASHBOARD (5 TABS) -->
+    <!-- ============================================================== -->
+    <div id="dashboardView" class="dashboard-layout hidden">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="brand-logo">
+                    <div class="brand-icon">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <div class="brand-text">Skill<span>Pulse</span></div>
+                </a>
+
+                <div class="portal-badge-pill">
+                    <i class="fa-solid fa-briefcase"></i> Portal Company
+                </div>
+            </div>
+
+            <!-- 5 Sidebar Menu Items -->
+            <ul class="sidebar-menu">
+                <li class="menu-item">
+                    <a onclick="switchTab('dashboard')" class="menu-link active" id="menu-dashboard">
+                        <i class="fa-solid fa-table-cells-large"></i> Dashboard
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a onclick="switchTab('post-job')" class="menu-link" id="menu-post-job">
+                        <i class="fa-solid fa-circle-plus"></i> Post Job
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a onclick="switchTab('match-user')" class="menu-link" id="menu-match-user">
+                        <i class="fa-solid fa-users-viewfinder"></i> Match User
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a onclick="switchTab('notification')" class="menu-link" id="menu-notification">
+                        <i class="fa-solid fa-bell"></i> Notification
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a onclick="switchTab('settings')" class="menu-link" id="menu-settings">
+                        <i class="fa-solid fa-gear"></i> Settings
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Sidebar User Profile Footer -->
+            <div class="sidebar-user">
+                <div class="user-info-brief">
+                    <div class="user-avatar-circle" id="companyAvatarCircle">T</div>
+                    <div class="user-names">
+                        <h4 id="companyNameBrief">TechCorp Solutions</h4>
+                        <p id="companyEmailBrief">hr@techcorp.com</p>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="handleCompanyLogout()" title="Log out">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+
+            <!-- -------------------------------------------------------- -->
+            <!-- TAB 1: DASHBOARD -->
+            <!-- -------------------------------------------------------- -->
+            <section id="tab-dashboard">
+                <div class="topbar">
+                    <div class="welcome-head">
+                        <h2>Welcome back, <span id="compWelcomeName">TechCorp Solutions</span>!</h2>
+                        <p>Here is an overview of your active hiring pipelines and verified candidate matches.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="switchTab('post-job')">
+                        <i class="fa-solid fa-plus"></i> Post New Job
+                    </button>
+                </div>
+
+                <!-- 4 Stat Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fa-solid fa-briefcase"></i></div>
+                        <div class="stat-info">
+                            <h5>Active Job Posts</h5>
+                            <div class="stat-value" id="statActiveJobs">3</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fa-solid fa-users"></i></div>
+                        <div class="stat-info">
+                            <h5>Total Applicants</h5>
+                            <div class="stat-value" id="statTotalApplicants">28</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fa-solid fa-bullseye"></i></div>
+                        <div class="stat-info">
+                            <h5>Matched Candidates</h5>
+                            <div class="stat-value" id="statMatchedCandidates">4</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="stat-info">
+                            <h5>Skill Verification</h5>
+                            <div class="stat-value">100%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Published Jobs Requisitions -->
+                <div class="card-box">
+                    <div class="card-box-header">
+                        <h3>Active Job Requisitions</h3>
+                        <button class="btn btn-outline btn-sm" onclick="switchTab('post-job')">
+                            Create Requisition
+                        </button>
+                    </div>
+
+                    <div id="companyJobsList">
+                        <!-- Rendered dynamically by js/company.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- -------------------------------------------------------- -->
+            <!-- TAB 2: POST JOB -->
+            <!-- -------------------------------------------------------- -->
+            <section id="tab-post-job" class="hidden">
+                <div class="topbar">
+                    <div class="welcome-head">
+                        <h2>Post a New Job or Internship</h2>
+                        <p>Define role requirements to initiate transparent algorithmic matching with verified job seekers.</p>
+                    </div>
+                </div>
+
+                <div class="card-box">
+                    <form id="postJobForm" onsubmit="handlePostJobSubmit(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Job / Internship Title</label>
+                                <input type="text" id="jobTitle" class="form-input" placeholder="e.g. ML Intern or Full Stack Developer" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Employment Type</label>
+                                <select id="jobType" class="form-select">
+                                    <option value="Internship">Internship</option>
+                                    <option value="Full-Time">Full-Time Job</option>
+                                    <option value="Contract">Contract</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Job Location</label>
+                                <input type="text" id="jobLocation" class="form-input" placeholder="e.g. Bengaluru, India or Remote" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Compensation / Salary</label>
+                                <input type="text" id="jobSalary" class="form-input" placeholder="e.g. ₹25,000/month or ₹7,00,000/year" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Experience Required</label>
+                                <select id="jobExp" class="form-select">
+                                    <option value="0-1 years">0-1 years (Fresher)</option>
+                                    <option value="1-3 years">1-3 years</option>
+                                    <option value="3-5 years">3-5 years</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Minimum Qualification</label>
+                                <input type="text" id="jobQual" class="form-input" placeholder="e.g. B.Tech in CS or related degree" required>
+                            </div>
+
+                            <div class="form-group full">
+                                <label class="form-label">Required Skills (Comma separated for algorithmic match)</label>
+                                <input type="text" id="jobSkills" class="form-input" placeholder="e.g. Python, Machine Learning, SQL, Git" required>
+                            </div>
+
+                            <div class="form-group full">
+                                <label class="form-label">Job Description & Responsibilities</label>
+                                <textarea id="jobDesc" class="form-textarea" placeholder="Describe the day-to-day responsibilities and goals for this position..." required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-10" style="margin-top: 10px;">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-paper-plane"></i> Publish Job Requisition
+                            </button>
+                            <button type="button" class="btn btn-outline" onclick="switchTab('dashboard')">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- -------------------------------------------------------- -->
+            <!-- TAB 3: MATCH USER (Candidate Matching Engine) -->
+            <!-- -------------------------------------------------------- -->
+            <section id="tab-match-user" class="hidden">
+                <div class="topbar">
+                    <div class="welcome-head">
+                        <h2>Match User Engine</h2>
+                        <p>Browse verified candidates matched against your active requisitions with transparent score breakdown.</p>
+                    </div>
+                </div>
+
+                <div class="card-box" style="padding: 16px 20px; margin-bottom: 24px;">
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px;">
+                        <input type="text" class="form-input" placeholder="Search candidate by name, skill (e.g. Python, AI), or role..." onkeyup="filterCandidatesInput(this.value)">
+                        <select class="form-select" onchange="filterCandidatesInput(this.value)">
+                            <option value="">All Requisitions</option>
+                            <option value="ML Intern">ML Intern</option>
+                            <option value="Software Developer Intern">Software Developer Intern</option>
+                            <option value="Data Analyst">Data Analyst</option>
+                        </select>
+                        <select class="form-select" onchange="filterCandidatesInput(this.value)">
+                            <option value="">All Skill Levels</option>
+                            <option value="python">Python Verified</option>
+                            <option value="ml">Machine Learning Verified</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Candidate Grid -->
+                <div class="candidate-grid" id="candidatesContainer">
+                    <!-- Rendered dynamically by js/company.js -->
+                </div>
+            </section>
+
+            <!-- -------------------------------------------------------- -->
+            <!-- TAB 4: NOTIFICATION -->
+            <!-- -------------------------------------------------------- -->
+            <section id="tab-notification" class="hidden">
+                <div class="topbar">
+                    <div class="welcome-head">
+                        <h2>Notifications</h2>
+                        <p>Real-time updates on candidate applications and coaching center verifications.</p>
+                    </div>
+                </div>
+
+                <div class="notif-list" id="companyNotifList">
+                    <!-- Rendered dynamically by js/company.js -->
+                </div>
+            </section>
+
+            <!-- -------------------------------------------------------- -->
+            <!-- TAB 5: SETTINGS -->
+            <!-- -------------------------------------------------------- -->
+            <section id="tab-settings" class="hidden">
+                <div class="topbar">
+                    <div class="welcome-head">
+                        <h2>Company Settings</h2>
+                        <p>Manage organizational information, HR contacts, and account security.</p>
+                    </div>
+                </div>
+
+                <div class="card-box" style="max-width: 720px;">
+                    <form onsubmit="saveCompanySettings(event)">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" id="setCompName" class="form-input" value="TechCorp Solutions" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Official HR Email</label>
+                                <input type="email" id="setCompEmail" class="form-input" value="hr@techcorp.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">HR Contact Person</label>
+                                <input type="text" id="setCompPerson" class="form-input" value="Pooja Hegde" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Headquarters Location</label>
+                                <input type="text" id="setCompLoc" class="form-input" value="Bengaluru, Karnataka, India" required>
+                            </div>
+
+                            <div class="form-group full">
+                                <label class="form-label">Company Description</label>
+                                <textarea id="setCompBio" class="form-textarea">Building next-generation enterprise AI and analytics platforms for high-growth sectors.</textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">
+                            Save Company Changes
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Dedicated Company Script -->
+    <script src="js/company.js"></script>
+</body>
+</html>
+

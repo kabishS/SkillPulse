@@ -227,11 +227,14 @@ function renderJobs() {
 
     container.innerHTML = jobs.map(job => `
         <div class="job-item">
-            <div class="job-info">
-                <h4>${job.title}</h4>
-                <p><i class="fa-solid fa-location-dot"></i> ${job.location} &nbsp;|&nbsp; <i class="fa-solid fa-money-bill-wave"></i> ${job.salary} &nbsp;|&nbsp; Posted ${job.postedDate}</p>
-                <div class="skills-wrap" style="margin-top: 8px;">
-                    ${(job.skills || []).map(s => `<span class="skill-pill">${s}</span>`).join('')}
+            <div style="display: flex; gap: 14px; align-items: center;">
+                ${job.image ? `<img src="${job.image}" alt="${job.title}" style="width: 54px; height: 54px; border-radius: 10px; object-fit: cover; border: 1px solid #e2e8f0;">` : `<div style="width: 54px; height: 54px; border-radius: 10px; background: #eff6ff; color: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700;"><i class="fa-solid fa-building"></i></div>`}
+                <div class="job-info">
+                    <h4>${job.title}</h4>
+                    <p><i class="fa-solid fa-location-dot"></i> ${job.location} &nbsp;|&nbsp; <i class="fa-solid fa-money-bill-wave"></i> ${job.salary} &nbsp;|&nbsp; Posted ${job.postedDate}</p>
+                    <div class="skills-wrap" style="margin-top: 8px;">
+                        ${(job.skills || []).map(s => `<span class="skill-pill">${s}</span>`).join('')}
+                    </div>
                 </div>
             </div>
             <div style="text-align: right;">
@@ -256,44 +259,58 @@ function handlePostJobSubmit(e) {
     const skillsRaw = document.getElementById('jobSkills').value.trim();
     const qual = document.getElementById('jobQual').value.trim();
     const desc = document.getElementById('jobDesc').value.trim();
+    const imageInput = document.getElementById('jobImage');
 
     const skillsArr = skillsRaw.split(',').map(s => s.trim()).filter(s => s);
 
-    const newJob = {
-        id: Date.now(),
-        company: currentCompany.name,
-        title: title,
-        type: type,
-        location: location,
-        salary: salary,
-        experience: exp,
-        skills: skillsArr.length ? skillsArr : ["General Skills"],
-        qualification: qual,
-        status: "Active",
-        applicants: 0,
-        postedDate: "Today",
-        desc: desc
+    const publishJobWithImage = (imageDataUrl) => {
+        const newJob = {
+            id: Date.now(),
+            company: currentCompany.name,
+            title: title,
+            type: type,
+            location: location,
+            salary: salary,
+            experience: exp,
+            skills: skillsArr.length ? skillsArr : ["General Skills"],
+            qualification: qual,
+            status: "Active",
+            applicants: 0,
+            postedDate: "Today",
+            desc: desc,
+            image: imageDataUrl || ""
+        };
+
+        const jobs = getStoredJobs();
+        jobs.unshift(newJob);
+        saveStoredJobs(jobs);
+
+        // Add Notification
+        let notifs = getStoredNotifications();
+        notifs.unshift({
+            icon: "fa-circle-check",
+            title: `Job Requisition Published: ${title}`,
+            time: "Just now",
+            desc: `New ${type} posted for ${location}. Live on SkillPulse User Portal for candidates.`
+        });
+        localStorage.setItem(STORAGE_NOTIFS_KEY, JSON.stringify(notifs.slice(0, 20)));
+
+        alert(`Job Requisition "${title}" published successfully! It is now live on the User Portal.`);
+        document.getElementById('postJobForm').reset();
+        renderJobs();
+        renderNotifications();
+        switchTab('dashboard');
     };
 
-    const jobs = getStoredJobs();
-    jobs.unshift(newJob);
-    saveStoredJobs(jobs);
-
-    // Add Notification
-    let notifs = getStoredNotifications();
-    notifs.unshift({
-        icon: "fa-circle-check",
-        title: `Job Requisition Published: ${title}`,
-        time: "Just now",
-        desc: `New ${type} posted for ${location}. Live on SkillPulse User Portal for candidates.`
-    });
-    localStorage.setItem(STORAGE_NOTIFS_KEY, JSON.stringify(notifs.slice(0, 20)));
-
-    alert(`Job Requisition "${title}" published successfully! It is now live on the User Portal.`);
-    document.getElementById('postJobForm').reset();
-    renderJobs();
-    renderNotifications();
-    switchTab('dashboard');
+    if (imageInput && imageInput.files && imageInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            publishJobWithImage(evt.target.result);
+        };
+        reader.readAsDataURL(imageInput.files[0]);
+    } else {
+        publishJobWithImage("");
+    }
 }
 
 // Compute Match Score between Candidate and Company Jobs

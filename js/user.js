@@ -372,9 +372,6 @@ function renderOpportunities(filterQuery = "") {
                 <div class="empty-icon"><i class="fa-solid fa-briefcase"></i></div>
                 <h3>No opportunities posted yet</h3>
                 <p>When companies publish jobs or internships in the Company Portal, they will dynamically appear here with your personalized skill match score.</p>
-                <a href="company.html" class="btn btn-secondary btn-sm" style="margin-top: 10px;">
-                    <i class="fa-solid fa-building"></i> Switch to Company Portal to Post a Job
-                </a>
             </div>
         `;
         return;
@@ -394,14 +391,19 @@ function renderOpportunities(filterQuery = "") {
         const matchScore = calculateSkillMatch(job.skills || []);
         return `
             <div class="opp-card">
-                <div class="flex-between">
-                    <span class="opp-badge ${job.type === 'Internship' ? 'internship' : 'job'}">${job.type}</span>
+                <div class="flex-between" style="align-items: flex-start;">
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        ${job.image ? `<img src="${job.image}" alt="${job.title}" style="width: 48px; height: 48px; border-radius: 10px; object-fit: cover; border: 1px solid #e2e8f0;">` : `<div style="width: 48px; height: 48px; border-radius: 10px; background: #eff6ff; color: var(--primary-blue); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700;"><i class="fa-solid fa-building"></i></div>`}
+                        <div>
+                            <span class="opp-badge ${job.type === 'Internship' ? 'internship' : 'job'}">${job.type}</span>
+                            <h3 style="margin-top: 4px; font-size: 1.05rem;">${job.title}</h3>
+                        </div>
+                    </div>
                     <span class="skill-pill" style="font-weight: 700; ${matchScore >= 50 ? 'background:#dcfce7; color:#166534;' : ''}">
                         ${matchScore}% Match
                     </span>
                 </div>
-                <h3>${job.title}</h3>
-                <p class="opp-company"><i class="fa-solid fa-building"></i> ${job.company || "Hiring Company"}</p>
+                <p class="opp-company" style="margin-top: 8px;"><i class="fa-solid fa-building"></i> ${job.company || "Hiring Company"}</p>
                 <div class="opp-meta-grid">
                     <span><i class="fa-solid fa-location-dot"></i> ${job.location}</span>
                     <span><i class="fa-solid fa-money-bill-wave"></i> ${job.salary}</span>

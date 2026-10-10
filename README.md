@@ -144,7 +144,3 @@ If using Visual Studio Code with the **Live Server** extension:
    - Click **Apply Now**: A notification is sent to the company portal.
 
 ---
-
-## 📄 License & Credits
-
-Developed for the **Smart India Hackathon** problem statement **#SIH26135**.  

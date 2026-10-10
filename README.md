@@ -148,4 +148,3 @@ If using Visual Studio Code with the **Live Server** extension:
 ## 📄 License & Credits
 
 Developed for the **Smart India Hackathon** problem statement **#SIH26135**.  
-&copy; 2026 **SkillPulse**. All rights reserved.
